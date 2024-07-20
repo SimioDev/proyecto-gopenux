@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  backend:
+    image: gopenux-sistemas/backend:latest
+    ports:
+      - "8080:5000"
+    networks:
+      - server
+
+  frontend:
+    image: gopenux-sistemas/frontend:latest
+    networks:
+      - proxy
+
+  proxy:
+    image: nginx:latest
+    ports:
+      - "3000:80"
+    networks:
+      - proxy
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: Gopenux
+    volumes:
+      - ./data:/var/lib/mysql
+      - type: tmpfs
+        target: /tmp
+      - db_backup:/backups
+    networks:
+      - server
+
+networks:
+  server:
+  proxy:
+
+volumes:
+  db_backup:

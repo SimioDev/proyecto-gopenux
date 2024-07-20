@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba Tecnica - Gopenux</title>
+    <script>
+        async function fetchDate() {
+            try {
+                const response = await fetch('http://localhost:8080/date');
+                const data = await response.json();
+                document.getElementById('date').textContent = data.date;
+            } catch (error) {
+                document.getElementById('date').textContent = "He tenido un pequeño error al obtener la fecha!";
+                console.error('He tenido un pequeño error al obtener la fecha:', error);
+            }
+        }
+        window.onload = fetchDate;
+    </script>
+</head>
+<body>
+    <h1>Fecha Actual:</h1>
+    <p id="date">Cargando...</p>
+</body>
+</html>
